@@ -1,0 +1,140 @@
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+  font-family: "Poppins", sans-serif;
+}
+
+body {
+  background-color: #f5f7fa;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  min-height: 100vh;
+  padding: 20px;
+}
+
+.verification-container {
+  width: 100%;
+  max-width: 500px;
+  position: relative;
+}
+
+.verification-card {
+  background-color: white;
+  border-radius: 12px;
+  padding: 40px;
+  box-shadow: 0 10px 30px rgba(0, 0, 0, 0.05);
+  text-align: center;
+  position: relative;
+}
+
+.close-button {
+  position: absolute;
+  top: 15px;
+  right: 15px;
+  background: none;
+  border: none;
+  font-size: 20px;
+  color: #95a5a6;
+  cursor: pointer;
+  padding: 5px;
+  transition: color 0.3s;
+}
+
+.close-button:hover {
+  color: #e74c3c;
+}
+
+.success-icon {
+  color: #4caf50;
+  font-size: 72px;
+  margin-bottom: 20px;
+}
+
+h1 {
+  color: #2c3e50;
+  font-size: 24px;
+  font-weight: 600;
+  margin-bottom: 15px;
+}
+
+.success-message {
+  color: #7f8c8d;
+  font-size: 16px;
+  line-height: 1.6;
+  margin-bottom: 30px;
+}
+
+.additional-info {
+  text-align: left;
+  background-color: #f8f9fa;
+  border-radius: 8px;
+  padding: 20px;
+  margin-bottom: 30px;
+}
+
+.info-item {
+  display: flex;
+  align-items: center;
+  margin-bottom: 12px;
+  color: #34495e;
+}
+
+.info-item:last-child {
+  margin-bottom: 0;
+}
+
+.info-item i {
+  margin-right: 10px;
+  color: #7f8c8d;
+  width: 20px;
+  text-align: center;
+}
+
+.continue-button {
+  background-color: #4caf50;
+  color: white;
+  border: none;
+  padding: 12px 24px;
+  border-radius: 6px;
+  font-size: 16px;
+  font-weight: 500;
+  cursor: pointer;
+  width: 100%;
+  transition: background-color 0.3s;
+}
+
+.continue-button:hover {
+  background-color: #45a049;
+}
+
+.support-text {
+  margin-top: 20px;
+  color: #95a5a6;
+  font-size: 14px;
+}
+
+.support-text a {
+  color: #3498db;
+  text-decoration: none;
+}
+
+.support-text a:hover {
+  text-decoration: underline;
+}
+
+/* Responsivnya */
+@media (max-width: 600px) {
+  .verification-card {
+    padding: 30px 20px;
+  }
+
+  h1 {
+    font-size: 20px;
+  }
+
+  .success-message {
+    font-size: 14px;
+  }
+}

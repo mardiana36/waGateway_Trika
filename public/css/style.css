@@ -1,0 +1,656 @@
+:root {
+  --primary-color: #25d366;
+  --secondary-color: #128c7e;
+  --light-color: #dcf8c6;
+  --dark-color: #075e54;
+  --gray-color: #ece5dd;
+  --text-color: #333;
+  --white: #ffffff;
+  --error-color: #ff4444;
+}
+.hidden {
+  display: none !important;
+}
+
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+  font-family: "Segoe UI", Tahoma, Geneva, Verdana, sans-serif;
+}
+
+.dropDownTable {
+  font-size: 14px;
+  background: white;
+  border: 1px solid #ccc;
+  padding: 6px;
+  position: absolute;
+  z-index: 100;
+  max-height: 200px;
+  overflow-y: auto;
+  display: none;
+  min-width: 150px;
+  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.15);
+}
+#customerTable{
+  min-height: 250px;
+}
+th {
+  position: relative;
+  cursor: pointer;
+  user-select: none;
+}
+
+.group-label{
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+.group-label >i{
+  color: var(--primary-color);
+  font-size: 20px;
+  cursor: pointer;
+}
+.group-label > i:hover{
+  color: var(--dark-color);
+}
+.activeToggleTemplates {
+  color: #25d366 !important;
+  border-color: #25d366 !important;
+}
+.divSelectTemplate {
+  display: flex;
+  justify-content: left;
+  flex-wrap: wrap;
+  height: 150px;
+  align-items: self-start;
+  border: 1px solid #e0e0e0;
+  border-radius: 10px;
+  padding: 10px;
+  gap: 5px;
+}
+body {
+  background-color: #f5f5f5;
+  color: var(--text-color);
+  line-height: 1.6;
+}
+
+.container {
+  max-width: 1000px;
+  margin: 0 auto;
+  padding: 20px;
+}
+
+/*header {
+background-color: var(--secondary-color);
+color: var(--white);
+padding: 20px 0;
+text-align: center;
+border-radius: 8px 8px 0 0;
+margin-bottom: 30px;
+box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
+}*/
+
+/*style untuk navbar*/
+.wa-navbar {
+  background-color: #128c7e !important;
+}
+
+.wa-brand {
+  font-weight: 600;
+  letter-spacing: 0.5px;
+}
+
+.nav-link {
+  text-align: center;
+  color: rgba(255, 255, 255, 0.8) !important;
+  font-weight: 500;
+  padding: 8px 15px !important;
+  margin: 0 2px;
+  border-radius: 7px;
+  transition: all 0.3s ease;
+}
+
+.nav-link:hover {
+  color: white !important;
+  background-color: rgba(255, 255, 255, 0.1);
+}
+
+.nav-link.active {
+  color: white !important;
+  background-color: #30a598;
+}
+.hiddenToggle {
+  display: none !important;
+}
+.navbar-toggler {
+  border-color: white;
+  color: white;
+  padding: 5px;
+}
+
+.checkbox-group {
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+}
+
+.checkbox-item {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+}
+
+.checkbox-item.select-all {
+  margin-bottom: 8px;
+  padding-bottom: 8px;
+  border-bottom: 1px solid #eee;
+}
+
+.checkbox-input {
+  margin: 0;
+  width: 18px;
+  height: 18px;
+}
+
+.checkbox-label {
+  margin: 0;
+  font-size: 16px;
+  line-height: 1.5;
+}
+
+.toggle-container {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  font-family: sans-serif;
+}
+
+.toggle-switch {
+  position: relative;
+  display: inline-block;
+  width: 60px;
+  height: 34px;
+}
+
+.toggle-switch input {
+  opacity: 0;
+  width: 0;
+  height: 0;
+}
+
+.slider {
+  position: absolute;
+  cursor: pointer;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  background-color: #ccc;
+  transition: 0.4s;
+  border-radius: 34px;
+}
+
+.slider:before {
+  position: absolute;
+  content: "";
+  height: 26px;
+  width: 26px;
+  left: 4px;
+  bottom: 4px;
+  background-color: white;
+  transition: 0.4s;
+  border-radius: 50%;
+}
+
+.toggle-switch input:checked + .slider {
+  background-color: #4caf50;
+}
+
+.toggle-switch input:checked + .slider:before {
+  transform: translateX(26px);
+}
+/* style untuk navbar*/
+
+/*style untuk body*/
+h1 {
+  font-size: 28px;
+  margin-bottom: 10px;
+}
+
+.description {
+  font-size: 16px;
+  opacity: 0.9;
+}
+
+.main-content {
+  display: flex;
+  gap: 20px;
+}
+
+.form-section {
+  width: 65%;
+  flex: 1;
+}
+
+.qr-section {
+  width: 300px;
+}
+
+.card {
+  background-color: var(--white);
+  border-radius: 8px;
+  box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+  padding: 25px;
+  margin-bottom: 30px;
+}
+
+.tabs {
+  display: flex;
+  margin-bottom: 20px;
+  border-bottom: 1px solid #ddd;
+}
+
+.tab {
+  padding: 12px 20px;
+  cursor: pointer;
+  background-color: var(--gray-color);
+  border: none;
+  border-radius: 5px 5px 0 0;
+  margin-right: 5px;
+  font-weight: 600;
+  transition: all 0.3s ease;
+}
+
+.tab.active {
+  background-color: var(--primary-color);
+  color: var(--white);
+}
+
+.tab:hover:not(.active) {
+  background-color: #e0e0e0;
+}
+
+.tab-content {
+  display: none;
+}
+
+.tab-content.active {
+  display: block;
+}
+
+.form-group {
+  margin-bottom: 20px;
+}
+
+label {
+  display: block;
+  margin-bottom: 8px;
+  font-weight: 600;
+}
+
+input,
+select,
+textarea {
+  width: 100%;
+  padding: 12px;
+  border: 1px solid #ddd;
+  border-radius: 5px;
+  font-size: 16px;
+  transition: border 0.3s ease;
+}
+
+input:focus,
+select:focus,
+textarea:focus {
+  border-color: var(--primary-color);
+  outline: none;
+  box-shadow: 0 0 0 2px rgba(37, 211, 102, 0.2);
+}
+
+textarea {
+  min-height: 120px;
+  resize: vertical;
+}
+
+.btnn {
+  background-color: var(--primary-color);
+  color: var(--white);
+  border: none;
+  padding: 12px 24px;
+  border-radius: 5px;
+  cursor: pointer;
+  font-size: 16px;
+  font-weight: 600;
+  transition: all 0.3s ease;
+  display: inline-block;
+}
+
+.btnn:hover {
+  background-color: var(--dark-color);
+}
+
+.btnn-block {
+  display: block;
+  width: 100%;
+}
+
+.phone-example {
+  font-size: 12px;
+  color: #666;
+  margin-top: 4px;
+}
+
+.error-message {
+  color: var(--error-color);
+  font-size: 14px;
+  margin-top: 5px;
+  display: none;
+}
+
+.phone-container {
+  display: flex;
+  align-items: center;
+}
+
+.phone-prefix {
+  padding: 12px;
+  background-color: #f0f0f0;
+  border: 1px solid #ddd;
+  border-right: none;
+  border-radius: 5px 0 0 5px;
+  font-size: 16px;
+}
+
+.phone-input {
+  border-radius: 0 5px 5px 0;
+}
+
+.add-number-btn {
+  background-color: var(--secondary-color);
+  color: white;
+  border: none;
+  padding: 8px 12px;
+  border-radius: 5px;
+  cursor: pointer;
+  margin-top: 10px;
+  font-size: 14px;
+}
+
+.progress-bar {
+  transition: width 0.1s linear;
+}
+
+.number-list {
+  margin-top: 10px;
+}
+
+.number-item {
+  display: flex;
+  justify-content: space-between;
+  padding: 8px;
+  background-color: #f5f5f5;
+  border-radius: 4px;
+  margin-bottom: 5px;
+}
+
+.remove-number {
+  color: var(--error-color);
+  cursor: pointer;
+}
+
+/*style untuk menu template pesan masuk*/
+.template-container {
+  margin-bottom: 20px;
+}
+
+.template-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 15px;
+}
+
+.template-title {
+  font-size: 18px;
+  font-weight: 600;
+  color: var(--dark-color);
+}
+
+.add-template-btn {
+  background-color: var(--primary-color);
+  color: white;
+  border: none;
+  border-radius: 50%;
+  width: 30px;
+  height: 30px;
+  font-size: 20px;
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.add-template-btn:hover {
+  background-color: var(--dark-color);
+}
+
+.template-form {
+  display: none;
+  background-color: var(--light-color);
+  padding: 15px;
+  border-radius: 8px;
+  margin-bottom: 15px;
+  animation: fadeIn 0.3s ease;
+}
+
+@keyframes fadeIn {
+  from {
+    opacity: 0;
+    transform: translateY(-10px);
+  }
+
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+.template-item {
+  display: flex;
+  background-color: white;
+  border-radius: 8px;
+  padding: 15px;
+  margin-bottom: 10px;
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.05);
+  flex-wrap: wrap;
+}
+
+.template-actions {
+  display: flex;
+  gap: 10px;
+}
+
+.template-edit,
+.template-delete {
+  background: none;
+  border: none;
+  cursor: pointer;
+  font-size: 14px;
+}
+
+.template-edit {
+  color: var(--secondary-color);
+}
+
+.template-delete {
+  color: var(--error-color);
+}
+
+.form-actions {
+  display: flex;
+  justify-content: flex-end;
+  gap: 10px;
+  margin-top: 10px;
+}
+
+.cancel-btn {
+  background-color: #f0f0f0;
+  color: var(--text-color);
+}
+
+/*style untuk template pesan*/
+
+/* style untuk qr code*/
+.qr-card {
+  background-color: var(--white);
+  border-radius: 8px;
+  box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+  padding: 20px;
+  text-align: center;
+}
+
+.qr-code {
+  margin: 15px 0;
+}
+
+.qr-code img {
+  width: 200px;
+  height: 200px;
+  display: block;
+  margin: 0 auto;
+}
+
+.qr-instruction {
+  font-size: 14px;
+  color: #666;
+  margin-top: 10px;
+}
+
+@media (max-width: 768px) {
+  .container {
+    padding: 10px;
+  }
+
+  .main-content {
+    flex-direction: column;
+  }
+  .form-section {
+    width: 100%;
+  }
+  .qr-section {
+    width: 100%;
+    order: -1;
+    margin-bottom: 20px;
+  }
+
+  .tabs {
+    flex-direction: column;
+  }
+
+  .tab {
+    margin-right: 0;
+    margin-bottom: 5px;
+    border-radius: 5px;
+  }
+}
+
+/* style untuk qr code */
+
+/* Style untuk status connected&not connect*/
+.connection-status {
+  align-items: center;
+  justify-content: center;
+  gap: 8px;
+  margin: 10px 0;
+  padding: 8px 12px;
+  border-radius: 20px;
+  font-weight: bold;
+}
+
+.connected {
+  background-color: #e3f7e5;
+  color: #25d366;
+}
+
+.not-connected {
+  background-color: #feeaea;
+  color: #ff3b30;
+}
+
+.status-icon {
+  width: 10px;
+  height: 10px;
+  border-radius: 50%;
+  display: inline-block;
+}
+
+/* Style untuk status connected&not connect*/
+
+/* Style untuk toggle switch */
+.toggle-switch {
+  position: relative;
+  display: inline-block;
+  width: 60px;
+  height: 34px;
+  margin-right: 10px;
+}
+
+.toggle-switch input {
+  opacity: 0;
+  width: 0;
+  height: 0;
+}
+
+.slider {
+  position: absolute;
+  cursor: pointer;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  background-color: #ccc;
+  transition: 0.4s;
+}
+.slider:before {
+  position: absolute;
+  content: "";
+  height: 26px;
+  width: 26px;
+  left: 4px;
+  bottom: 4px;
+  background-color: white;
+  transition: 0.4s;
+}
+
+input:checked + .slider {
+  background-color: #25d366;
+}
+
+input:checked + .slider:before {
+  transform: translateX(26px);
+}
+
+.slider.round {
+  border-radius: 34px;
+}
+
+.slider.round:before {
+  border-radius: 50%;
+}
+
+.form-toggle {
+  display: flex;
+  align-items: center;
+  margin: 15px 0;
+}
+
+#toggleLabel {
+  margin: 0;
+  font-size: 16px;
+}
+
+.ModePesan {
+  margin: 10px;
+}
+/* Style untuk toggle switch */
