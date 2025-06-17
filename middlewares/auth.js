@@ -102,6 +102,15 @@ exports.authToken = async (req, res, next) => {
     if (!token) {
       return res.status(401).json({ message: "Token tidak ditemukan" });
     }
+    if (token !== process.env.API_TOKEN) {
+      return res
+        .status(401)
+        .json({
+          message:
+            "Token tidak valid. Pastikan token yang terdapat dalam environment (API_TOKEN) sama dengan token dalam headers Autorization.",
+        });
+    }
+
     const decoded = jwt.verify(token, tokenModule.decodeSecretToken());
     if (tokenModule.decodeVerifyToken(decoded)) {
       next();

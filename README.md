@@ -1,0 +1,132 @@
+Berikut adalah format yang lebih terstruktur dan mudah dipahami untuk dimasukkan ke dalam file README.md:
+
+```markdown
+# WhatsApp Gateway Trika
+
+Sebuah sistem WhatsApp Gateway yang memungkinkan pengiriman pesan otomatis melalui WhatsApp.
+
+## Prasyarat Instalasi
+
+- Node.js (v14 atau lebih baru)
+- XAMPP (atau aplikasi database MySQL lainnya)
+- Git
+- Visual Studio Code (disarankan)
+
+## Instalasi
+
+1. **Instal Node.js dan XAMPP**
+   - Download Node.js: [https://nodejs.org/en](https://nodejs.org/en)
+   - Download XAMPP: [https://www.apachefriends.org/download.html](https://www.apachefriends.org/download.html)
+
+2. **Clone Repository**
+   ```bash
+   git clone https://github.com/mardiana36/waGateway_Trika.git
+   cd waGateway_Trika
+   ```
+
+3. **Instal Dependensi**
+   ```bash
+   npm install
+   ```
+
+4. **Konfigurasi Environment**
+   - Salin isi file `.env.example` ke file baru bernama `.env`
+   - Isi semua variabel yang diperlukan di file `.env`
+   - Untuk `JWT_SECRET`, jalankan perintah berikut dan salin hasilnya:
+     ```bash
+     node -e "console.log(require('crypto').randomBytes(32).toString('hex'))"
+     ```
+
+5. **Jalankan XAMPP**
+   - Start Apache dan MySQL
+
+6. **Jalankan Aplikasi**
+   ```bash
+   npm start
+   ```
+
+   Jika berhasil, akan muncul pesan:
+   ```
+   Server running on port 3000
+   [INFO] Database 'wa_gateway' berhasil dibuat atau sudah ada.
+   [OK] Struktur database dan relasi berhasil dibuat.
+   Memulai inisialisasi semua session dari database...
+   Tidak ada session yang perlu diinisialisasi
+   ```
+
+## Penggunaan API
+
+### Mendapatkan API Token
+Dapatkan API Token dari: [https://tokenwa-production.up.railway.app/](https://tokenwa-production.up.railway.app/)
+
+### API Start Session
+
+**Endpoint:**  
+`POST http://localhost:3000/api/b/sessions`
+
+**Header:**
+| Key | Value | Keterangan |
+|-----|-------|------------|
+| Authorization | Bearer {API_TOKEN} | Ganti {API_TOKEN} dengan token yang didapat |
+| Content-Type | application/json | - |
+
+**Body (JSON):**
+```json
+{
+  "sessionName": "nama_sesi"
+}
+```
+
+**Contoh Request (JavaScript):**
+```javascript
+try {
+  const data = { sessionName: "bot1" };
+  const token = "api_token_anda";
+
+  const response = await fetch("/api/b/sessions", {
+    method: "POST",
+    headers: {
+      Authorization: `Bearer ${token}`,
+      "Content-Type": "application/json",
+    },
+    body: JSON.stringify(data),
+  });
+  
+  const result = await response.json();
+  if (result.success) {
+    alert(result.message);
+  } else {
+    alert(result.error);
+  }
+} catch (error) {
+  alert(error.message);
+}
+```
+
+**Response Berhasil:**
+```json
+{
+  "success": true,
+  "message": "Sesi sudah berjalan dan berhasil terautentikasi."
+}
+```
+
+**Response Gagal:**
+- Jika sessionName bukan string:
+  ```json
+  {
+    "success": false,
+    "error": "Tipe data sessionName harus String."
+  }
+  ```
+- Jika error server:
+  ```json
+  {
+    "success": false,
+    "error": "Internal server error"
+  }
+  ```
+
+## Catatan
+- API ini hanya akan mengembalikan response ketika QR Code sudah discan dan terhubung dengan WhatsApp
+```
