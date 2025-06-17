@@ -147,7 +147,7 @@ try {
 
 - API ini hanya akan mengembalikan response ketika QR Code sudah discan dan terhubung dengan WhatsApp
 
-### 2. API Delete Session
+### `2. API Delete Session`
 
 **Endpoint:**
 
