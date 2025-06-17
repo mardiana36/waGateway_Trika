@@ -66,14 +66,12 @@ Dapatkan API Token dari: [https://tokenwa-production.up.railway.app/](https://to
 | Key | Value | Keterangan |
 |-----|-------|------------|
 | Authorization | Bearer {API_TOKEN} | Ganti {API_TOKEN} dengan token yang didapat |
-| Content-Type | application/json | - |
+| Content-Type | application/json | Memberi tahu server bahwa data yang dikirim dalam body permintaan (request body) adalah dalam format JSON (JavaScript Object Notation). |
 
-**Body (JSON):**
-```json
-{
-  "sessionName": "nama_sesi"
-}
-```
+**Body:**
+| Parameter | Contoh nilai | Tipe | Wajib | Keterangan |
+|-----------|--------------|------|-------|------------|
+| sessionName | bot1 | string | ya | nama dari sesi yang akan di start. |
 
 **Contoh Request (JavaScript):**
 ```javascript
