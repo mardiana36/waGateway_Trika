@@ -1,4 +1,4 @@
-Project ini dibuat oleh mardiana036(Backend) dan SuryaPranata(Frontend)
+Project ini dibuat oleh mardiana036 (Backend) dan SuryaPranata (Frontend)
 
 # WhatsApp Gateway
 
@@ -60,7 +60,8 @@ Dapatkan API Token dari: [https://tokenwa-production.up.railway.app/](https://to
 ### API Start Session
 
 **Endpoint:**  
-`POST http://localhost:3000/api/b/sessions`
+- URL: `http://localhost:3000/api/b/sessions`
+- Method : `POST`
 
 **Header:**
 | Key | Value | Keterangan |
@@ -72,6 +73,13 @@ Dapatkan API Token dari: [https://tokenwa-production.up.railway.app/](https://to
 | Parameter | Contoh nilai | Tipe | Wajib | Keterangan |
 |-----------|--------------|------|-------|------------|
 | sessionName | bot1 | string | ya | nama dari sesi yang akan di start. |
+
+**Contoh Body (JSON):**
+```json
+{
+    "sessionName": "bot1"
+}
+```
 
 **Contoh Request (JavaScript):**
 ```javascript
@@ -125,4 +133,3 @@ try {
 
 ## Catatan
 - API ini hanya akan mengembalikan response ketika QR Code sudah discan dan terhubung dengan WhatsApp
-```
