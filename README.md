@@ -66,6 +66,12 @@ Dapatkan API Token dari: [https://tokenwa-production.up.railway.app/](https://to
 
 ## `1. API Start Session`
 
+
+**Catatan:**
+
+- API ini hanya akan mengembalikan response ketika QR Code sudah discan dan terhubung dengan WhatsApp
+
+
 **Endpoint:**
 
 - URL: `http://localhost:3000/api/b/sessions`
@@ -143,11 +149,13 @@ try {
   }
   ```
 
+## `2. API Delete Session`
+
+
 **Catatan:**
 
-- API ini hanya akan mengembalikan response ketika QR Code sudah discan dan terhubung dengan WhatsApp
+- API ini digunakan untuk menghapus sesi yang ada dalam database dan folder tokens yang di buat otomatis oleh library `@wppconnect-team/wppconnect`
 
-## `2. API Delete Session`
 
 **Endpoint:**
 
@@ -247,11 +255,12 @@ try {
   }
   ```
 
+## `3. API Change Device`
+
 **Catatan:**
 
-- API ini digunakan untuk menghapus sesi yang ada dalam database dan folder tokens yang di buat otomatis oleh library `@wppconnect-team/wppconnect`
+- Api ini digunakan untuk memutuskan tautan WhatsApp dan menampilkan QR Code ulang yang dapat discan mengunakan nomor WhatsApp yang diinginkan.
 
-## `3. API Change Device`
 
 **Endpoint:**
 
@@ -349,11 +358,10 @@ try {
   }
   ```
 
-**Catatan:**
-
-- Api ini digunakan untuk memutuskan tautan WhatsApp dan menampilkan QR Code ulang yang dapat discan mengunakan nomor WhatsApp yang diinginkan.
-
 ## `4. API Get QR Code`
+
+**Catatan:**
+- Api ini di gunakan untuk mengambil dan mengecek status dari QR Code yang di hasilkan oleh library `@wppconnect-team/wppconnect`
 
 **Endpoint:**
 
@@ -475,6 +483,3 @@ try {
   }
   ```
 
-**Catatan:**
-
-- Api ini di gunakan untuk mengambil dan mengecek status dari QR Code yang di hasilkan oleh library `@wppconnect-team/wppconnect`
