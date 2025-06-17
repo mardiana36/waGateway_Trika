@@ -143,9 +143,10 @@ try {
   }
   ```
 
-## Catatan
+**Catatan:**
 
 - API ini hanya akan mengembalikan response ketika QR Code sudah discan dan terhubung dengan WhatsApp
+## 
 
 ### `2. API Delete Session`
 
@@ -247,5 +248,6 @@ try {
   }
   ```
 
-## Catatan
+**Catatan:**
 - API ini digunakan untuk menghapus sesi yang ada dalam database dan folder tokens yang di buat otomatis oleh library `@wppconnect-team/wppconnect`
+## 
