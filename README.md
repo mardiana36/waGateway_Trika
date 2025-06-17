@@ -64,7 +64,7 @@ Sebuah sistem WhatsApp Gateway yang memungkinkan pengiriman pesan masal, group, 
 
 Dapatkan API Token dari: [https://tokenwa-production.up.railway.app/](https://tokenwa-production.up.railway.app/)
 
-### 1. API Start Session
+### `1. API Start Session`
 
 **Endpoint:**
 
