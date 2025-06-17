@@ -560,7 +560,6 @@ try {
 
 ```json
 {
- {
   "success": true,
   "results": [
     {
@@ -574,7 +573,6 @@ try {
       "message": "Pesan nomor 2"
     }
   ]
-}
 }
 ```
 
@@ -597,7 +595,7 @@ try {
     "error": "Tipe data sessionName harus String."
   }
   ```
-  
+
 - Jika message tipe datanya bukan string atau array:
 
   ```json
@@ -615,7 +613,7 @@ try {
     "error": "Tipe data number harus String atau array."
   }
   ```
-  
+
 - Jika QR Code belum di scan atau terautentikasi:
 
   ```json
