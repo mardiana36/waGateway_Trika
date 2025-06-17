@@ -248,4 +248,233 @@ try {
   ```
 
 **Catatan:**
+
 - API ini digunakan untuk menghapus sesi yang ada dalam database dan folder tokens yang di buat otomatis oleh library `@wppconnect-team/wppconnect`
+
+## `3. API Change Device`
+
+**Endpoint:**
+
+- URL: `http://localhost:3000/api/b/sessions`
+- Method : `DELETE`
+
+**Header:**
+| Key | Value | Keterangan |
+|-----|-------|------------|
+| Authorization | Bearer {API_TOKEN} | Ganti {API_TOKEN} dengan token yang didapat |
+| Content-Type | application/json | Memberi tahu server bahwa data yang dikirim dalam request body dalam format JSON (JavaScript Object Notation). |
+
+**Body:**
+| Parameter | Contoh nilai | Tipe | Wajib | Keterangan |
+|-----------|--------------|------|-------|------------|
+| sessionName | bot1 | string | ya | Nama dari sesi yang akan di diganti tauntan WhatsAppnya. |
+
+**Contoh Body (JSON):**
+
+```json
+{
+  "sessionName": "bot1"
+}
+```
+
+**Contoh Request (JavaScript):**
+
+```javascript
+try {
+  const data = { sessionName: "bot1" };
+  const token = "api_token_anda";
+
+  const response = await fetch("/api/b/", {
+    method: "PUT",
+    headers: {
+      Authorization: `Bearer ${token}`,
+      "Content-Type": "application/json",
+    },
+    body: JSON.stringify(data),
+  });
+
+  const result = await response.json();
+  if (result.success) {
+    // lakukan sesuatu ketika berhasil pergantian perangkat
+  } else {
+    alert(result.error);
+  }
+} catch (error) {
+  alert(error.message);
+}
+```
+
+**Response Berhasil:**
+
+```json
+{
+  "success": true
+}
+```
+
+**Response Gagal:**
+
+- Jika sesi belum ada atau belum mulai:
+
+  ```json
+  {
+    "success": false,
+    "error": "Sesi ini belum ada! Silahkan mulai sesinya terlebih dahulu."
+  }
+  ```
+
+- Jika sessionName tipe datanya bukan string:
+
+  ```json
+  {
+    "success": false,
+    "error": "Tipe data sessionName harus String."
+  }
+  ```
+
+- Jika QR code belum di scan atau sesi belum terautentikasi :
+
+  ```json
+  {
+    "success": false,
+    "error": "WhatsApp Gateway belum terautentikasi! Silahkan scan QR code terlebih dahulu."
+  }
+  ```
+
+- Jika error server:
+  ```json
+  {
+    "success": false,
+    "error": "Internal server error"
+  }
+  ```
+
+**Catatan:**
+
+- Api ini digunakan untuk memutuskan tautan WhatsApp dan menampilkan QR Code ulang yang dapat discan mengunakan nomor WhatsApp yang diinginkan.
+
+## `4. API Get QR Code`
+
+**Endpoint:**
+
+- URL: `http://localhost:3000/api/b/qr`
+- Method : `POST`
+
+**Header:**
+| Key | Value | Keterangan |
+|-----|-------|------------|
+| Authorization | Bearer {API_TOKEN} | Ganti {API_TOKEN} dengan token yang didapat |
+| Content-Type | application/json | Memberi tahu server bahwa data yang dikirim dalam request body dalam format JSON (JavaScript Object Notation). |
+
+**Body:**
+| Parameter | Contoh nilai | Tipe | Wajib | Keterangan |
+|-----------|--------------|------|-------|------------|
+| sessionName | bot1 | string | ya | Nama dari sesi yang akan di diganti tauntan WhatsAppnya. |
+
+**Contoh Body (JSON):**
+
+```json
+{
+  "sessionName": "bot1"
+}
+```
+
+**Contoh Request (JavaScript):**
+
+```javascript
+try {
+  const data = { sessionName: "bot1" };
+  const token = "api_token_anda";
+
+  const response = await fetch("/api/b/qr", {
+    method: "POST",
+    headers: {
+      Authorization: `Bearer ${token}`,
+      "Content-Type": "application/json",
+    },
+    body: JSON.stringify(data),
+  });
+
+  const result = await response.json();
+  if (result.success) {
+    // lakukan sesuatu ketika berhasil
+  } else {
+    alert(result.error);
+  }
+} catch (error) {
+  alert(error.message);
+}
+```
+
+**Response Berhasil:**
+
+- Jika QR Code belum discan
+```json
+{
+  "success": true,
+  "qr": "data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAJYAAA...", //berisi data qr base64Qr (Sebuah string Base64 yang merepresentasikan gambar QR code.)
+  "statusQR": "ready"
+}
+```
+
+- Jika QR Code sudah discan dan tidak ada masalah saat scan (dari library `@wppconnect-team/wppconnect`)
+```json
+{
+  "success": true,
+  "statusQR": "qrReadSuccess"
+}
+```
+
+- Jika QR Code masih dalam proses pembuatan
+```json
+{
+  "success": true,
+  "statusQR": "not_ready"
+}
+```
+
+- Jika server gagal mengautentikasi QR Code (dari library `@wppconnect-team/wppconnect`)
+```json
+{
+  "success": true,
+  "statusQR": "qrReadError"
+}
+```
+
+- Jika browser berhenti saat pemindaian kode QR sedang berlangsung (dari library `@wppconnect-team/wppconnect`)
+```json
+{
+  "success": true,
+  "statusQR": "qrReadFail"
+}
+```
+
+**Response Gagal:**
+
+- Jika sesi belum ada atau belum mulai:
+  ```json
+  {
+    "success": false,
+    "error": "Sesi ini belum ada! Silahkan mulai sesinya terlebih dahulu."
+  }
+  ```
+
+- Jika sessionName tipe datanya bukan string:
+  ```json
+  {
+    "success": false,
+    "error": "Tipe data sessionName harus String."
+  }
+  ```
+
+- Jika error server:
+  ```json
+  {
+    "success": false,
+    "error": "Internal server error"
+  }
+  ```
+
+**Catatan:**
+
+- Api ini di gunakan untuk mengambil dan mengecek status dari QR Code yang di hasilkan oleh library `@wppconnect-team/wppconnect`
