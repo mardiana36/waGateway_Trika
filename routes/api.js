@@ -388,7 +388,7 @@ router.post("/b/qr", authToken, whatsappController.getQRCode);
  * @param {string} sessionName.body.required - Nama sesi
  * @param {string|string[]} number.body.required - Nomor tujuan
  * @param {string|string[]} message.body.required - Isi pesan
- * @param {number} [delay=300].body - Delay antar pengiriman (ms)
+ * @param {number} - Delay antar pengiriman (default 300ms)
  * @returns {object} 200 - Hasil pengiriman
  * @security APIKey
  */

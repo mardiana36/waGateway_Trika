@@ -66,11 +66,9 @@ Dapatkan API Token dari: [https://tokenwa-production.up.railway.app/](https://to
 
 ## `1. API Start Session`
 
-
 **Catatan:**
 
 - API ini hanya akan mengembalikan response ketika QR Code sudah discan dan terhubung dengan WhatsApp
-
 
 **Endpoint:**
 
@@ -151,11 +149,9 @@ try {
 
 ## `2. API Delete Session`
 
-
 **Catatan:**
 
 - API ini digunakan untuk menghapus sesi yang ada dalam database dan folder tokens yang di buat otomatis oleh library `@wppconnect-team/wppconnect`
-
 
 **Endpoint:**
 
@@ -261,7 +257,6 @@ try {
 
 - Api ini digunakan untuk memutuskan tautan WhatsApp dan menampilkan QR Code ulang yang dapat discan mengunakan nomor WhatsApp yang diinginkan.
 
-
 **Endpoint:**
 
 - URL: `http://localhost:3000/api/b/sessions`
@@ -361,6 +356,7 @@ try {
 ## `4. API Get QR Code`
 
 **Catatan:**
+
 - Api ini di gunakan untuk mengambil dan mengecek status dari QR Code yang di hasilkan oleh library `@wppconnect-team/wppconnect`
 
 **Endpoint:**
@@ -417,6 +413,7 @@ try {
 **Response Berhasil:**
 
 - Jika QR Code belum discan
+
 ```json
 {
   "success": true,
@@ -426,6 +423,7 @@ try {
 ```
 
 - Jika QR Code sudah discan dan tidak ada masalah saat scan (dari library `@wppconnect-team/wppconnect`)
+
 ```json
 {
   "success": true,
@@ -434,6 +432,7 @@ try {
 ```
 
 - Jika QR Code masih dalam proses pembuatan
+
 ```json
 {
   "success": true,
@@ -442,6 +441,7 @@ try {
 ```
 
 - Jika server gagal mengautentikasi QR Code (dari library `@wppconnect-team/wppconnect`)
+
 ```json
 {
   "success": true,
@@ -450,6 +450,7 @@ try {
 ```
 
 - Jika browser berhenti saat pemindaian kode QR sedang berlangsung (dari library `@wppconnect-team/wppconnect`)
+
 ```json
 {
   "success": true,
@@ -460,6 +461,7 @@ try {
 **Response Gagal:**
 
 - Jika sesi belum ada atau belum mulai:
+
   ```json
   {
     "success": false,
@@ -468,6 +470,7 @@ try {
   ```
 
 - Jika sessionName tipe datanya bukan string:
+
   ```json
   {
     "success": false,
@@ -483,3 +486,171 @@ try {
   }
   ```
 
+## `4. API Send Bulk Mesage`
+
+**Catatan:**
+
+- API ini di gunakan untuk melakukan pengiriman pesan secara masal berdasarkan nomor WhatsApp.
+
+**Endpoint:**
+
+- URL: `http://localhost:3000/api/b/send-bulk-message`
+- Method : `POST`
+
+**Header:**
+| Key | Value | Keterangan |
+|-----|-------|------------|
+| Authorization | Bearer {API_TOKEN} | Ganti {API_TOKEN} dengan token yang didapat |
+| Content-Type | application/json | Memberi tahu server bahwa data yang dikirim dalam request body dalam format JSON (JavaScript Object Notation). |
+
+**Body:**
+| Parameter | Contoh nilai | Tipe | Wajib | Keterangan |
+|-----------|--------------|------|-------|------------|
+| sessionName | bot1 | string | ya | Nama dari sesi yang akan di diganti tauntan WhatsAppnya. |
+| number | ["0857476353656", "6285765654321"] | array | ya | Nomor WhatsApp tujuan pengiriman pesan. |
+| message | ["Pesan nomo 1", "Pesan nomor 2"] | array | ya | Isi dari pesan yang akan di kirim. |
+| delay | 300 | number | tidak | Secara default nilainya 300 (satuan ms). ini adalah delay pengiriman pesan ke masing-masing nomor WhatsApp tujuan. |
+
+**Contoh Body (JSON):**
+
+```json
+{
+  "sessionName": "bot1",
+  "number": ["0857476353656", "6285765654321"],
+  "message": ["Pesan nomo 1", "Pesan nomor 2"],
+  "delay": 400
+}
+```
+
+**Contoh Request (JavaScript):**
+
+```javascript
+try {
+  const data = {
+    sessionName: "bot1",
+    number: ["0857476353656", "6285765654321"],
+    message: ["Pesan nomo 1", "Pesan nomor 2"],
+    delay: 400,
+  };
+  const token = "api_token_anda";
+
+  const response = await fetch("/api/b/send-bulk-message", {
+    method: "POST",
+    headers: {
+      Authorization: `Bearer ${token}`,
+      "Content-Type": "application/json",
+    },
+    body: JSON.stringify(data),
+  });
+
+  const result = await response.json();
+  if (result.success) {
+    // lakukan sesuatu ketika berhasil
+  } else {
+    alert(result.error);
+  }
+} catch (error) {
+  alert(error.message);
+}
+```
+
+**Response Berhasil:**
+
+- Jika Berhasil mengirim pesan
+
+```json
+{
+ {
+  "success": true,
+  "results": [
+    {
+      "no": "62857476353656",
+      "status": "success",
+      "message": "Pesan nomo 1"
+    },
+    {
+      "no": "6285765654321",
+      "status": "success",
+      "message": "Pesan nomor 2"
+    }
+  ]
+}
+}
+```
+
+**Response Gagal:**
+
+- Jika sesi belum ada atau belum mulai:
+
+  ```json
+  {
+    "success": false,
+    "error": "Sesi ini belum ada! Silahkan mulai sesinya terlebih dahulu."
+  }
+  ```
+
+- Jika sessionName tipe datanya bukan string:
+
+  ```json
+  {
+    "success": false,
+    "error": "Tipe data sessionName harus String."
+  }
+  ```
+  
+- Jika message tipe datanya bukan string atau array:
+
+  ```json
+  {
+    "success": false,
+    "error": "Tipe data message harus String atau array."
+  }
+  ```
+
+- Jika number tipe datanya bukan string atau array:
+
+  ```json
+  {
+    "success": false,
+    "error": "Tipe data number harus String atau array."
+  }
+  ```
+  
+- Jika QR Code belum di scan atau terautentikasi:
+
+  ```json
+  {
+    "success": false,
+    "error": "WhatsApp Gateway belum terautentikasi! Silahkan scan QR code terlebih dahulu."
+  }
+  ```
+
+- Jika gagal pada saat mengirim pesan:
+
+  ```json
+  {
+    "success": true,
+    "results": [
+      {
+        "no": "6285+476353656",
+        "status": "failed",
+        "message": "Pesan nomo 1",
+        "error": "wid error: invalid wid"
+      },
+      {
+        "no": "62+6285765654321",
+        "status": "failed",
+        "message": "Pesan nomor 2",
+        "error": "wid error: invalid wid"
+      }
+    ]
+  }
+  ```
+
+- Jika error server:
+  ```json
+  {
+    "success": false,
+    "error": "Internal server error"
+  }
+  ```

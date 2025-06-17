@@ -81,7 +81,7 @@ const startSession = async (sessionName) => {
           "devices",
           {
             name: sessionName,
-            password: await hash(crypto.randomBytes(12).toString('hex'),10),
+            password: await hash(crypto.randomBytes(12).toString("hex"), 10),
             email: "-",
             is_verified: 1,
           },
@@ -1120,7 +1120,7 @@ const whatsappController = {
       if (typeof message != "string" && !Array.isArray(message)) {
         return res.status(400).json({
           success: false,
-          error: "Tipe data number harus String atau Array.",
+          error: "Tipe data message harus String atau Array.",
         });
       }
       if (typeof number != "string" && !Array.isArray(number)) {
@@ -1134,6 +1134,7 @@ const whatsappController = {
       const session = sessions.get(sessionName);
       if (!session || session.status !== "authenticated") {
         return res.status(400).json({
+          success: false,
           error:
             "WhatsApp Gateway belum terautentikasi! Silahkan scan QR code terlebih dahulu.",
         });
@@ -1141,7 +1142,7 @@ const whatsappController = {
 
       const client = session.client;
       if (!client) {
-        return res.status(400).json({ error: "Client tidak tersedia" });
+        console.log("[WARNING] Client tidak tersedia");
       }
 
       const dbSession = await whatsAppModule.Select(
