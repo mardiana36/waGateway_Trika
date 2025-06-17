@@ -491,6 +491,8 @@ try {
 **Catatan:**
 
 - API ini di gunakan untuk melakukan pengiriman pesan secara masal berdasarkan nomor WhatsApp.
+- Untuk value dari variabel `number` yang di gunakan untuk menampung nomor WhatsApp tujuan tidak boleh di mulai dengan `+62` yang boleh `62` atau `0` atau `tanpa keduanya` asal jangan ada `+` di depan nomornya.
+- API ini hanya support nomor telepon Indonesia jika tidak melakukan modifikasi bakend lebih lanjut.
 
 **Endpoint:**
 
@@ -547,7 +549,7 @@ try {
   if (result.success) {
     // lakukan sesuatu ketika berhasil
   } else {
-    alert(result.error);
+      // lakukan sesuatu ketika gagal
   }
 } catch (error) {
   alert(error.message);
