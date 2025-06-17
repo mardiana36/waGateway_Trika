@@ -64,7 +64,7 @@ Sebuah sistem WhatsApp Gateway yang memungkinkan pengiriman pesan masal, group, 
 
 Dapatkan API Token dari: [https://tokenwa-production.up.railway.app/](https://tokenwa-production.up.railway.app/)
 
-### `1. API Start Session` ##
+## `1. API Start Session`
 
 **Endpoint:**
 
@@ -147,7 +147,7 @@ try {
 
 - API ini hanya akan mengembalikan response ketika QR Code sudah discan dan terhubung dengan WhatsApp
 
-### `2. API Delete Session` ## 
+## `2. API Delete Session`
 
 **Endpoint:**
 
