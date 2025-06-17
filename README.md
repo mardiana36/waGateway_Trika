@@ -1,9 +1,8 @@
-Berikut adalah format yang lebih terstruktur dan mudah dipahami untuk dimasukkan ke dalam file README.md:
+Project ini dibuat oleh mardiana036(Backend) dan SuryaPranata(Frontend)
 
-```markdown
-# WhatsApp Gateway Trika
+# WhatsApp Gateway
 
-Sebuah sistem WhatsApp Gateway yang memungkinkan pengiriman pesan otomatis melalui WhatsApp.
+Sebuah sistem WhatsApp Gateway yang memungkinkan pengiriman pesan masal, group, dan otomatis melalui WhatsApp.
 
 ## Prasyarat Instalasi
 
@@ -23,7 +22,6 @@ Sebuah sistem WhatsApp Gateway yang memungkinkan pengiriman pesan otomatis melal
    git clone https://github.com/mardiana36/waGateway_Trika.git
    cd waGateway_Trika
    ```
-
 3. **Instal Dependensi**
    ```bash
    npm install
