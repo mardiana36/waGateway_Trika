@@ -525,6 +525,14 @@ const checkSession = async (sessionName) => {
   }
 };
 
+const isValidIDGroup = async (idGroup) => {
+  try {
+    await client.groupMetadata(idGroup);
+    return true;
+  } catch (error) {
+    return false;
+  }
+};
 /**
  * Object Controller yang di gunakan untuk membungkus beberapa method di dalamnya yang berfugsi untuk menerima request dan memberikan respone ke route api.
  *@namespace whatsappController
@@ -1353,10 +1361,11 @@ const whatsappController = {
    * @param {string} req.body.sessionName - Nama sesi pengirim
    * @param {string[]} req.body.groupsId - ID grup tujuan
    * @param {string} req.body.message - Pesan yang dikirim
+   * @param {number} req.body.delay - delay pengiriman pesan (default 300ms)
    * @returns {object} Response JSON dengan hasil pengiriman
    */
   sendGroupsMessage: async (req, res) => {
-    const { sessionName, groupsId, message } = req.body;
+    const { sessionName, groupsId, message, delay = 300 } = req.body;
     try {
       if (!(await checkSession(sessionName))) {
         return res.status(400).json({
@@ -1415,19 +1424,23 @@ const whatsappController = {
       }
 
       for (const groupId of groupsId) {
-        const idWaGrup = await whatsAppModule.Select(
-          "wa_group",
-          { session_id: sessionId, waId: groupId },
-          db,
-          ["id"]
-        );
         try {
-          await new Promise((resolve) => setTimeout(resolve, 300));
+          const idWaGrup = await whatsAppModule.Select(
+            "wa_group",
+            { session_id: sessionId, waId: groupId },
+            db,
+          );
+          if (!isValidIDGroup(groupId) || idWaGrup.length == 0) {
+            throw new Error("Id group tidak valid.");
+          }
+          await new Promise((resolve) => setTimeout(resolve, delay));
+          // modif nanti buat valid group
           await client.sendText(groupId, message);
           await whatsAppModule.Insert(
             "messages_out_group",
             {
-              id_waGroup: idWaGrup[0].id,
+              session_id: sessionId,
+              groupId: groupId,
               message: message,
               status: "send",
             },
@@ -1438,7 +1451,8 @@ const whatsappController = {
           await whatsAppModule.Insert(
             "messages_out_group",
             {
-              id_waGroup: idWaGrup[0].id,
+              session_id: sessionId,
+              groupId: groupId,
               message: message,
               status: "failed",
             },
@@ -1447,7 +1461,7 @@ const whatsappController = {
           results.push({
             groupId,
             status: "failed",
-            error: "Gagal Mengirim Pesan!",
+            error: "Gagal Mengirim Pesan! " + error.message,
           });
         }
       }

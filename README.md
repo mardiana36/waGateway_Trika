@@ -486,13 +486,13 @@ try {
   }
   ```
 
-## `4. API Send Bulk Mesage`
+## `5. API Send Bulk Mesage`
 
 **Catatan:**
 
 - API ini di gunakan untuk melakukan pengiriman pesan secara masal berdasarkan nomor WhatsApp.
-- Untuk value dari variabel `number` yang di gunakan untuk menampung nomor WhatsApp tujuan tidak boleh di mulai dengan `+62` yang boleh `62` atau `0` atau `tanpa keduanya` asal jangan ada `+` di depan nomornya.
-- API ini hanya support nomor telepon Indonesia jika tidak melakukan modifikasi bakend lebih lanjut.
+- Untuk value dari variabel `number` yang di gunakan untuk menampung nomor WhatsApp tujuan tidak boleh di mulai dengan `+62` yang boleh `62` atau `0` atau `tanpa keduanya` asal jangan ada `+` didepan nomornya.
+- API ini hanya support nomor telepon `Indonesia` jika tidak melakukan modifikasi bakend lebih lanjut.
 
 **Endpoint:**
 
@@ -549,7 +549,7 @@ try {
   if (result.success) {
     // lakukan sesuatu ketika berhasil
   } else {
-      // lakukan sesuatu ketika gagal
+    // lakukan sesuatu ketika gagal
   }
 } catch (error) {
   alert(error.message);
@@ -642,6 +642,163 @@ try {
         "status": "failed",
         "message": "Pesan nomor 2",
         "error": "wid error: invalid wid"
+      }
+    ]
+  }
+  ```
+
+- Jika error server:
+  ```json
+  {
+    "success": false,
+    "error": "Internal server error"
+  }
+  ```
+
+## `6. API Send Group Mesage`
+
+**Catatan:**
+
+- API ini di gunakan untuk melakukan pengiriman pesan ke group WhatsApp.
+- `groupsId` bisa di dapatkan melalui api Get Group.
+- API ini hanya support pengiriman pesan yang sama ke beberapa grup (pesan belum bisa berbeda).
+
+**Endpoint:**
+
+- URL: `http://localhost:3000/api/b/send-group`
+- Method : `POST`
+
+**Header:**
+| Key | Value | Keterangan |
+|-----|-------|------------|
+| Authorization | Bearer {API_TOKEN} | Ganti {API_TOKEN} dengan token yang didapat |
+| Content-Type | application/json | Memberi tahu server bahwa data yang dikirim dalam request body dalam format JSON (JavaScript Object Notation). |
+
+**Body:**
+| Parameter | Contoh nilai | Tipe | Wajib | Keterangan |
+|-----------|--------------|------|-------|------------|
+| sessionName | bot1 | string | ya | Nama dari sesi yang akan di diganti tauntan WhatsAppnya. |
+| groupsId | ["120363399006547135@g.us"] | array | ya | ID Group tujuan pengiriman pesan yang bisa di dapat melalui `API Get Groups` |
+| message | "isi dari pesan" | array | ya | Isi dari pesan yang akan di kirim. |
+| delay | 300 | number | tidak | Secara default nilainya 300 (satuan ms). ini adalah delay pengiriman pesan ke masing-masing ID Group WhatsApp tujuan. |
+
+**Contoh Body (JSON):**
+
+```json
+{
+  "sessionName": "bot1",
+  "groupsId": ["120363399006547135@g.us"],
+  "message": "ini pesan ke group",
+  "delay": 400
+}
+```
+
+**Contoh Request (JavaScript):**
+
+```javascript
+try {
+  const data = {
+    sessionName: "bot1",
+    groupsId: ["120363399006547135@g.us"],
+    message: "ini pesan ke group",
+    delay: 400,
+  };
+  const token = "api_token_anda";
+
+  const response = await fetch("/api/b/send-group", {
+    method: "POST",
+    headers: {
+      Authorization: `Bearer ${token}`,
+      "Content-Type": "application/json",
+    },
+    body: JSON.stringify(data),
+  });
+
+  const result = await response.json();
+  if (result.success) {
+    // lakukan sesuatu ketika berhasil
+  } else {
+    // lakukan sesuatu ketika gagal
+  }
+} catch (error) {
+  alert(error.message);
+}
+```
+
+**Response Berhasil:**
+
+- Jika Berhasil mengirim pesan
+
+```json
+{
+  "success": true,
+  "results": [
+    {
+      "groupId": "120363399006547135@g.us",
+      "status": "send",
+      "message": "ini pesan ke group"
+    }
+  ]
+}
+```
+
+**Response Gagal:**
+
+- Jika sesi belum ada atau belum mulai:
+
+  ```json
+  {
+    "success": false,
+    "error": "Sesi ini belum ada! Silahkan mulai sesinya terlebih dahulu."
+  }
+  ```
+
+- Jika sessionName tipe datanya bukan string:
+
+  ```json
+  {
+    "success": false,
+    "error": "Tipe data sessionName harus String."
+  }
+  ```
+
+- Jika message tipe datanya bukan string:
+
+  ```json
+  {
+    "success": false,
+    "error": "Tipe data message harus String."
+  }
+  ```
+
+- Jika groupsId tipe datanya bukan array.:
+
+  ```json
+  {
+    "success": false,
+    "error": "Tipe data groupsId harus Array."
+  }
+  ```
+
+- Jika QR Code belum di scan atau terautentikasi:
+
+  ```json
+  {
+    "success": false,
+    "error": "WhatsApp Gateway belum terautentikasi! Silahkan scan QR code terlebih dahulu."
+  }
+  ```
+
+- Jika gagal pada saat mengirim pesan:
+
+  ```json
+  {
+    "success": true,
+    "results": [
+      {
+        "groupId": "120363399006547131@g.us",
+        "status": "failed",
+        "error": "Gagal Mengirim Pesan! Id group tidak valid."
       }
     ]
   }
