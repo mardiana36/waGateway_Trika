@@ -1317,19 +1317,12 @@ const whatsappController = {
             "WhatsApp Gateway belum terautentikasi! Silahkan scan QR code terlebih dahulu.",
         });
       }
-      const client = session.client;
       const dbSession = await whatsAppModule.Select(
         "sessions",
         { session_name: sessionName },
         db,
         ["id"]
       );
-
-      if (!dbSession || (dbSession.length === 0 && !client)) {
-        return res
-          .status(404)
-          .json({ success: false, error: "Session tidak ditemukan!" });
-      }
       const sessionId = dbSession[0].id;
       const response = await whatsAppModule.Delete(
         "wa_group",
@@ -1339,9 +1332,9 @@ const whatsappController = {
       if (response) {
         res.status(200).json({ success: true, message: "Delete success." });
       } else {
-        res.status(204).json({
+        res.status(400).json({
           success: false,
-          message: "Terjadi masalah saat hapus grup!",
+          message: "Terjadi masalah saat hapus grup! Atau group kosong.",
         });
       }
     } catch (error) {
@@ -1549,7 +1542,7 @@ const whatsappController = {
             "Tipe data type harus String dan berisi 'personal' atau 'group'",
         });
       }
-      if (typeof placeholder != "string") {
+      if ( placeholder && typeof placeholder != "string") {
         return res.status(400).json({
           success: false,
           error: "Tipe data placeholder harus String.",
@@ -1566,11 +1559,11 @@ const whatsappController = {
         {
           session_id: idSession[0].id,
           name: name,
-          key_message: keyMessage,
+          key_message: keyMessage ?? "",
           message: message,
           direction: direction,
           type: type,
-          placeholder: placeholder,
+          placeholder: placeholder ?? "",
         },
         db
       );
@@ -1669,7 +1662,7 @@ const whatsappController = {
             "Tipe data type harus String dan berisi 'personal' atau 'group'",
         });
       }
-      if (typeof placeholder != "string") {
+      if (typeof placeholder != "string" && placeholder) {
         return res.status(400).json({
           success: false,
           error: "Tipe data placeholder harus String.",
@@ -1679,11 +1672,11 @@ const whatsappController = {
         "template_message",
         {
           name: name,
-          key_message: keyMessage,
+          key_message: keyMessage ?? "",
           message: message,
           direction: direction,
           type: type,
-          placeholder: placeholder,
+          placeholder: placeholder ?? "",
           updated_at: new Date(),
         },
         { id: id },
