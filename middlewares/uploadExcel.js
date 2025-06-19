@@ -29,7 +29,7 @@ const fileFilter = (req, file, cb) => {
   ) {
     cb(null, true);
   } else {
-    cb(new Error("Hanya file Excel (.xlsx / .xls) yang diperbolehkan"), false);
+    cb(null, false);
   }
 };
 
@@ -42,7 +42,6 @@ const storage = multer.memoryStorage();
  * @type {multer.Multer}
  * @property {Object} storage - Penyimpanan memory (tidak disimpan ke disk)
  * @property {Function} fileFilter - Fungsi filter untuk validasi file Excel
- * @property {Object} limits - Batasan ukuran file (10MB)
  * 
  * @example
  * // Penggunaan dalam route Express
@@ -67,8 +66,6 @@ const storage = multer.memoryStorage();
 const upload = multer ({
     storage:storage,
     fileFilter:fileFilter,
-    limits:{fileSize: 10 * 1024 * 1024 }
-
 });
 
 module.exports = upload;

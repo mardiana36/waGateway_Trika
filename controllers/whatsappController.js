@@ -1084,6 +1084,20 @@ const whatsappController = {
    */
   prewiewExcel: async (req, res) => {
     try {
+      if (!req.file) {
+        return res.status(400).json({
+          success: false,
+          message: "File harus berupa Excel (.xlsx atau .xls)",
+        });
+      }
+
+      const MAX_SIZE = 100 * 1024 * 1024; // 100 MB
+      if (req.file.size > MAX_SIZE) {
+        return res.status(400).json({
+          success: false,
+          message: "Ukuran file maksimal 100MB",
+        });
+      }
       const fileBuffer = req.file.buffer;
       const workbook = XLSX.read(fileBuffer, { type: "buffer" });
 
@@ -1421,7 +1435,7 @@ const whatsappController = {
           const idWaGrup = await whatsAppModule.Select(
             "wa_group",
             { session_id: sessionId, waId: groupId },
-            db,
+            db
           );
           if (!isValidIDGroup(groupId) || idWaGrup.length == 0) {
             throw new Error("Id group tidak valid.");
@@ -1542,7 +1556,7 @@ const whatsappController = {
             "Tipe data type harus String dan berisi 'personal' atau 'group'",
         });
       }
-      if ( placeholder && typeof placeholder != "string") {
+      if (placeholder && typeof placeholder != "string") {
         return res.status(400).json({
           success: false,
           error: "Tipe data placeholder harus String.",
@@ -1742,7 +1756,7 @@ const whatsappController = {
       } else {
         res.status(200).json({
           success: false,
-          message: "Terjadi masalah saat mengahpus template pesan!",
+          message: "Template Pesan tidak ditemukan.",
         });
       }
     } catch (error) {
@@ -1939,6 +1953,20 @@ const whatsappController = {
    */
   prewiewExcelTemplate: async (req, res) => {
     try {
+      if (!req.file) {
+        return res.status(400).json({
+          success: false,
+          message: "File harus berupa Excel (.xlsx atau .xls)",
+        });
+      }
+
+      const MAX_SIZE = 100 * 1024 * 1024; // 100 MB
+      if (req.file.size > MAX_SIZE) {
+        return res.status(400).json({
+          success: false,
+          message: "Ukuran file maksimal 100MB",
+        });
+      }
       const fileBuffer = req.file.buffer;
       const workbook = XLSX.read(fileBuffer, { type: "buffer" });
 
@@ -1990,7 +2018,7 @@ const whatsappController = {
       if (typeof filleds != "object") {
         return res.status(400).json({
           success: false,
-          error: "Tipe data filleds harus String.",
+          error: "Tipe data filleds harus object.",
         });
       }
 
