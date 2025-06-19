@@ -24,8 +24,9 @@
   - [Preview Excel File](#16-api-preview-file-excel)
   - [Get Placeholder Template](#17-api-get-placeholder-template)
 
-Project ini dibuat oleh [mardiana036](https://github.com/mardiana36) (Backend) dan [SuryaPranata](https://github.com/SuryaPranata) (Frontend)
-Sebuah sistem WhatsApp Gateway yang memungkinkan pengiriman pesan masal, group, dan otomatis melalui WhatsApp. Dalam Project ini terdapat dua jenis route yang pertama ada route `ROUTES UNTUK FRONTEND (MEMBUTUHKAN LOGIN)` yang sudah ada frontendnya dan `ROUTES UNTUK BACKEND (MENGGUNAKAN TOKEN API)` yang belum ada frontendnya dan tanpa login namun mengunakan token untuk bisa mengakses apinya.
+Project ini dibuat oleh [mardiana036](https://github.com/mardiana36) (Backend) dan [SuryaPranata](https://github.com/SuryaPranata) (Frontend).
+
+Project ini adalah sebuah sistem WhatsApp Gateway berbasis website yang memungkinkan pengiriman pesan masal, group, dan otomatis melalui WhatsApp. Dalam Project ini terdapat dua jenis route yang pertama ada route `ROUTES UNTUK FRONTEND (MEMBUTUHKAN LOGIN)` yang sudah ada frontendnya dan `ROUTES UNTUK BACKEND (MENGGUNAKAN TOKEN API)` yang belum ada frontendnya dan tanpa login namun mengunakan token untuk bisa mengakses apinya.
 
 ## Beberapa Library Yang Digunakan
 
