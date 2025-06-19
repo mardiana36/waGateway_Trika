@@ -24,8 +24,7 @@
   - [Preview Excel File](#16-api-preview-file-excel)
   - [Get Placeholder Template](#17-api-get-placeholder-template)
 
-Project ini dibuat oleh mardiana036 (Backend) dan SuryaPranata (Frontend)
-
+Project ini dibuat oleh [mardiana036](https://github.com/mardiana36) (Backend) dan [SuryaPranata](https://github.com/SuryaPranata) (Frontend)
 Sebuah sistem WhatsApp Gateway yang memungkinkan pengiriman pesan masal, group, dan otomatis melalui WhatsApp. Dalam Project ini terdapat dua jenis route yang pertama ada route `ROUTES UNTUK FRONTEND (MEMBUTUHKAN LOGIN)` yang sudah ada frontendnya dan `ROUTES UNTUK BACKEND (MENGGUNAKAN TOKEN API)` yang belum ada frontendnya dan tanpa login namun mengunakan token untuk bisa mengakses apinya.
 
 ## Beberapa Library Yang Digunakan
@@ -90,7 +89,7 @@ Sebuah sistem WhatsApp Gateway yang memungkinkan pengiriman pesan masal, group, 
    Memulai inisialisasi semua session dari database...
    Tidak ada session yang perlu diinisialisasi
    ```
-   
+
 [Back to Navigation](#navigation)
 
 ## Penggunaan API (Belum Ada Frondendnya)
@@ -182,6 +181,8 @@ try {
     "error": "Internal server error"
   }
   ```
+
+[Back to Navigation](#navigation)
 
 ## `2. API Delete Session`
 
@@ -288,6 +289,8 @@ try {
   }
   ```
 
+[Back to Navigation](#navigation)
+
 ## `3. API Change Device`
 
 **Catatan:**
@@ -390,6 +393,8 @@ try {
     "error": "Internal server error"
   }
   ```
+
+[Back to Navigation](#navigation)
 
 ## `4. API Get QR Code`
 
@@ -523,6 +528,8 @@ try {
     "error": "Internal server error"
   }
   ```
+
+[Back to Navigation](#navigation)
 
 ## `5. API Send Bulk Mesage`
 
@@ -693,6 +700,8 @@ try {
   }
   ```
 
+[Back to Navigation](#navigation)
+
 ## `6. API Send Group Mesage`
 
 **Catatan:**
@@ -849,6 +858,8 @@ try {
     "error": "Internal server error"
   }
   ```
+
+[Back to Navigation](#navigation)
 
 ## `7. API Get Group`
 
@@ -1119,6 +1130,8 @@ try {
   }
   ```
 
+[Back to Navigation](#navigation)
+
 ## `9. API Create Template Message`
 
 **Catatan:**
@@ -1131,7 +1144,7 @@ try {
   - Variabel `direction` wajib diisi "out"
   - Variabel `type` sesuai keinginan ("personal" atau "group")
   - Variabel `placeholder` wajib ketika menggunakan `API Preview Data Excel` untuk mendapatakan data group atau orang yang akan di kirimkan pesan.
-- Variabel `placeholder` bisa di dapatkan melalui `API Get Placeholder Template`.
+- Variabel `placeholder` bisa di dapatkan melalui [`API Get Placeholder Template`](#17-api-get-placeholder-template).
 
 **Endpoint:**
 
@@ -1316,6 +1329,8 @@ try {
   }
   ```
 
+[Back to Navigation](#navigation)
+
 ## `10. API Update Template Message`
 
 **Catatan:**
@@ -1495,6 +1510,8 @@ try {
   }
   ```
 
+[Back to Navigation](#navigation)
+
 ## `11. API Reads Template Messages`
 
 **Catatan:**
@@ -1640,6 +1657,9 @@ try {
   }
   ```
 
+[Back to Navigation](#navigation)
+
+
 ## `12. API Reads Template Message (By Id)`
 
 **Catatan:**
@@ -1770,6 +1790,8 @@ try {
     "error": "Internal server error"
   }
   ```
+
+[Back to Navigation](#navigation)
 
 ## `13. API Reads Template Message (By Type)`
 
@@ -1904,6 +1926,8 @@ try {
   }
   ```
 
+[Back to Navigation](#navigation)
+
 ## `14. API Delete Template Message (By Id)`
 
 **Catatan:**
@@ -2024,6 +2048,8 @@ try {
   }
   ```
 
+[Back to Navigation](#navigation)
+
 ## `15. API Implementasion Template Message`
 
 **Catatan:**
@@ -2125,6 +2151,8 @@ try {
     "error": "Internal server error"
   }
   ```
+
+[Back to Navigation](#navigation)
 
 ## `16. API Preview File Excel`
 
@@ -2277,6 +2305,8 @@ try {
   }
   ```
 
+[Back to Navigation](#navigation)
+
 ## `17. API Get Placeholder Template`
 
 **Catatan:**
@@ -2385,3 +2415,7 @@ try {
     "error": "Internal server error"
   }
   ```
+
+  [Back to Navigation](#navigation)
+
+
