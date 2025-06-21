@@ -7,9 +7,13 @@ const Handlebars = require("handlebars");
 const whatsAppModule = require("../module/whatsAppModule");
 const XLSX = require("xlsx");
 const { sendVerificationEmail } = require("../config/email");
+const { sendRegisToken } = require("../config/regis");
 const crypto = require("crypto");
 const jwt = require("jsonwebtoken");
 const { promises } = require("dns");
+const { response } = require("express");
+const { error, table } = require("console");
+const { type } = require("os");
 require("dotenv").config();
 
 /**
@@ -470,6 +474,19 @@ const generateAuthToken = (devices) => {
 };
 
 /**
+ * Menghasilkan token autentikasi JWT berdasarkan data perangkat (devices).
+ * @param {object} devices - Objek yang berisi informasi perangkat atau data pengguna
+ * yang akan dienkripsi dalam token JWT.
+ * @returns {string} Token JWT yang terenkripsi dan berlaku selamanya untuk registrasi.
+ * @example
+ * const token = generateAuthTokenRegis({ id: 1, name: "Device A" });
+ * // token => "eyJhbGciOiJIUzI1NiIsInR5cCI6..."
+ */
+const generateAuthTokenRegis = (devices) => {
+  return jwt.sign(devices, process.env.JWT_SECRET);
+};
+
+/**
  * Memformat nomor telepon agar memiliki kode negara Indonesia (62).
  * Jika nomor sudah diawali dengan '62', maka akan dikembalikan apa adanya.
  * Jika nomor diawali dengan '0', maka '0' akan diganti menjadi '62'.
@@ -654,8 +671,21 @@ const whatsappController = {
         );
         if (response) {
           await sendVerificationEmail(email, verificationToken);
+          const authToken = generateAuthTokenRegis({
+            id: idDevice,
+            name: username,
+          });
+          res.cookie("regisToken", authToken, {
+            httpOnly: true,
+            secure: process.env.NODE_ENV === "production",
+            signed: true,
+            sameSite: "Strict",
+          });
+          const regisToken = crypto.randomBytes(32).toString("hex");
+          const redirect = sendRegisToken(regisToken);
           res.status(200).json({
             success: true,
+            redirectTo: redirect,
             message:
               "Registrasi berhasil! Silahkan cek email anda untuk memverifikasi akun anda. ",
           });
@@ -727,10 +757,99 @@ const whatsappController = {
         db
       );
       await whatsAppModule.Delete("tokens", { id: tokenRecord[0].id }, db);
+
+      res.clearCookie("regisToken", {
+        httpOnly: true,
+        secure: process.env.NODE_ENV === "production",
+        sameSite: "Strict",
+        signed: true,
+      });
+
       res.json({
         success: true,
         message: "Verifikasi email berhasil! Anda bisa login sekarang.",
       });
+    } catch (error) {
+      console.log("[Error] Terjadi masalah: ", error.message);
+      res.status(500).json({ success: false, error: "Internal server error." });
+    }
+  },
+
+  /**
+   * Digunakan untuk menecek apak user masuk ke link verifikasi sudah dari registrasi atau sudah teregistrasi
+   * @async
+   * @param {object} req - Request object
+   * @param {object} res - Response object
+   * @param {string} req.query - Token verifikasi dari email
+   * @returns {object} Response JSON dengan status verifikasi
+   * @example
+   */
+  verifyRegis: async (req, res) => {
+    try {
+      const { regisToken } = req.query;
+      if (regisToken) {
+        res.json({
+          success: true,
+        });
+      } else {
+        res.status(404).json({
+          success: false,
+          error: "Token tidak valid",
+        });
+      }
+    } catch (error) {
+      console.log("[Error] Terjadi masalah: ", error.message);
+      res.status(500).json({ success: false, error: "Internal server error." });
+    }
+  },
+  /**
+   * Digunakan untuk pengiriman ulang verifikasi email
+   * @async
+   * @param {object} req - Request object
+   * @param {object} res - Response object
+   * @param {string} req.regis.id - id device
+   * @returns {object} Response JSON dengan status verifikasi
+   * @example
+   */
+  resendVerifyEmail: async (req, res) => {
+    try {
+      const id = req.regis.id;
+      if (!id) {
+        res
+          .status(404)
+          .json({ success: false, error: "Rigistrasi token tidak ditemukan." });
+      }
+      const token = await whatsAppModule.Select(
+        "tokens",
+        { "tokens.device_id": id },
+        db,
+        ["tokens.token", "devices.email", "devices.is_verified"],
+        "AND",
+        "",
+        "",
+        0,
+        [
+          {
+            type: "INNER",
+            table: "devices",
+            on: "tokens.device_id = devices.id",
+          },
+        ]
+      );
+      if (token.length > 0) {
+        await sendVerificationEmail(token[0].email, token[0].token);
+        res.status(200).json({
+          success: true,
+          message:
+            "Pengiriman ulang verifikasi email berhasil. Silahkan cek kembali email anda.",
+        });
+      } else {
+        res.status(200).json({
+          success: true,
+          isVerified: true,
+          message: "Email ini sudah Terverifikasi silahkan login.",
+        });
+      }
     } catch (error) {
       console.log("[Error] Terjadi masalah: ", error.message);
       res.status(500).json({ success: false, error: "Internal server error." });

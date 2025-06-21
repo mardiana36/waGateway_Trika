@@ -1,5 +1,5 @@
-const nodemailer = require('nodemailer');
-require('dotenv').config();
+const nodemailer = require("nodemailer");
+require("dotenv").config();
 
 /**
  * Konfigurasi transporter email menggunakan nodemailer
@@ -14,8 +14,8 @@ const transporter = nodemailer.createTransport({
   service: process.env.EMAIL_SERVICE,
   auth: {
     user: process.env.EMAIL_USERNAME,
-    pass: process.env.EMAIL_PASSWORD
-  }
+    pass: process.env.EMAIL_PASSWORD,
+  },
 });
 
 /**
@@ -36,12 +36,15 @@ const transporter = nodemailer.createTransport({
  * }
  */
 const sendVerificationEmail = async (email, token) => {
+  if (!email || !token) {
+    throw new Error("Email atau token tidak boleh kosong.");
+  }
   const verificationUrl = `${process.env.BASE_URL}/verify?token=${token}`;
-  
+
   await transporter.sendMail({
     from: `"${process.env.EMAIL_FROM_NAME}" <${process.env.EMAIL_FROM}>`,
     to: email,
-    subject: 'Verifikasi Email Anda',
+    subject: "Verifikasi Email Anda",
     html: `
       <h2>Email Verification</h2>
       <p>Silahkan klik Tombol di bawah ini untuk memverifikasi email anda.</p>
@@ -51,7 +54,7 @@ const sendVerificationEmail = async (email, token) => {
       </a>
       <p>Jika bukan anda yang registrasi akun silahkan abaikan email ini.</p>
       <p>Verifikasi ini akan kadalwarsa selama 24 jam</p>
-    `
+    `,
   });
 };
 

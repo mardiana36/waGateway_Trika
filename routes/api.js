@@ -6,8 +6,10 @@ const {
   authenticate,
   ensureVerified,
   authToken,
+  authenticateRegis,
+  ensureVerifiedRegis,
 } = require("../middlewares/auth");
- 
+
 /**
  * Router untuk WhatsApp API dengan dua jenis autentikasi:
  * 1. Untuk frontend (membutuhkan registrasi/login)
@@ -18,7 +20,7 @@ const router = express.Router();
 // ==============================================
 //   ROUTES UNTUK FRONTEND (MEMBUTUHKAN LOGIN)
 // ==============================================
-//Di bawah ini adalah route yang di gunakan oleh frondend yang sudah ada di project ini. 
+//Di bawah ini adalah route yang di gunakan oleh frondend yang sudah ada di project ini.
 
 /**
  * Registrasi perangkat baru
@@ -54,6 +56,20 @@ router.post("/login", whatsappController.loginSession);
  * @returns {Error} 400 - Token invalid/kadaluarsa
  */
 router.get("/verify-email", whatsappController.verifyEmail);
+
+router.get(
+  "/verifyRegis",
+  authenticateRegis,
+  ensureVerifiedRegis,
+  whatsappController.verifyRegis
+);
+
+router.post(
+  "/verify-email",
+  authenticateRegis,
+  ensureVerifiedRegis,
+  whatsappController.resendVerifyEmail
+);
 
 /**
  * Hapus sesi WhatsApp
@@ -440,11 +456,7 @@ router.delete("/b/group", authToken, whatsappController.deleteGroups);
  * @returns {object} 200 - Template terupdate
  * @security APIKey
  */
-router.put(
-  "/b/template",
-  authToken,
-  whatsappController.updateTemplateMessage
-);
+router.put("/b/template", authToken, whatsappController.updateTemplateMessage);
 
 /**
  * Hapus template pesan (API Token)
@@ -470,11 +482,7 @@ router.delete(
  * @returns {object} 200 - Template baru
  * @security APIKey
  */
-router.post(
-  "/b/template",
-  authToken,
-  whatsappController.createTemplateMessage
-);
+router.post("/b/template", authToken, whatsappController.createTemplateMessage);
 
 /**
  * Dapatkan semua template (API Token)
@@ -514,11 +522,7 @@ router.post(
  * @returns {object} 200 - Template sesuai tipe
  * @security APIKey
  */
-router.post(
-  "/b/",
-  authToken,
-  whatsappController.readsTemplateMessagesByType
-);
+router.post("/b/", authToken, whatsappController.readsTemplateMessagesByType);
 
 /**
  * Kompilasi template (API Token)
@@ -529,11 +533,7 @@ router.post(
  * @returns {object} 200 - Pesan terkompilasi
  * @security APIKey
  */
-router.post(
-  "/b/compile",
-  authToken,
-  whatsappController.implementasionTemplate
-);
+router.post("/b/compile", authToken, whatsappController.implementasionTemplate);
 
 /**
  * Preview Excel (API Token)

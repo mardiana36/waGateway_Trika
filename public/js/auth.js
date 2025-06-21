@@ -70,6 +70,10 @@ function toggleForms() {
         if (result.success) {
           alert(result.message);
           document.getElementById("regForm").reset();
+          if(result?.redirectTo){
+            localStorage.setItem('redirectTo', result.redirectTo);
+            window.location.href = result.redirectTo;
+          }
           toggleForms();
         } else {
           alert(result.error);
@@ -120,6 +124,10 @@ function toggleForms() {
           window.location.href = "/";
         } else {
           alert(result.message);
+          const redirectTo = localStorage.getItem('redirectTo');
+          if(redirectTo){
+            window.location.href = redirectTo;
+          }
         }
       } catch (error) {
         console.log(error);

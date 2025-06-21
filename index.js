@@ -27,6 +27,9 @@ app.get("/auth", (req, res) => {
 app.get("/verify", (req, res) => {
   res.sendFile(path.join(__dirname, "views", "auth", "verify.html"));
 });
+app.get("/verifyRegis", (req, res) => {
+  res.sendFile(path.join(__dirname, "views", "auth", "sendVerify.html"));
+});
 
 const PORT = process.env.BASE_PORT;
 app.listen(PORT, async () => {
